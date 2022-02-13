@@ -1,24 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import Fader, { useFadeIn } from "./components/fader";
+import styled from "styled-components";
+
+const StyledParagraph = styled("p")({
+  fontFamily: "Arial",
+  fontSize: 30,
+});
 
 function App() {
+  const { fadeIn, toggleFadeHandler } = useFadeIn();
+
+  const onFadedComplete = () => console.log("Transition completed: ", fadeIn);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>
+        Demonstration of an animation component/hook to fade JSX children in and
+        out using CSS transitions
+      </p>
+      <button onClick={toggleFadeHandler}>
+        Click here to toggle fade effect
+      </button>
+
+      <Fader fadeIn={fadeIn} onFadeEnd={onFadedComplete}>
+        <StyledParagraph>What do you like a bit of?</StyledParagraph>
+      </Fader>
+
+      <p>fadeIn: {Boolean(fadeIn) ? "True" : "False"}</p>
     </div>
   );
 }
